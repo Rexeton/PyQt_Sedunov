@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from ui.login import Ui_Form
+from ui.book_shop import Ui_Form
 DEBUG=True
 class Window(QtWidgets.QWidget):
 
@@ -9,9 +9,9 @@ class Window(QtWidgets.QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
 
-        if DEBUG:
-            self.ui.login.setPlaceholderText('Vvedite_login')
-            self.ui.password.setPlaceholderText('Vvedite_parol')
+        # if DEBUG:
+        #     self.ui.login.setPlaceholderText('Vvedite_login')
+        #     self.ui.password.setPlaceholderText('Vvedite_parol')
 
 
 if __name__ == "__main__":

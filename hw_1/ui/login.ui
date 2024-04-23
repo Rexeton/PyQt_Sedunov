@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>174</width>
-    <height>114</height>
+    <width>400</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -62,7 +62,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="password">
+        <widget class="QLineEdit" name="login_window">
          <property name="echoMode">
           <enum>QLineEdit::EchoMode::PasswordEchoOnEdit</enum>
          </property>

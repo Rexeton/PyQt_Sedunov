@@ -54,11 +54,11 @@ class Ui_Form(object):
 
         self.horizontalLayout_2.addWidget(self.label_2)
 
-        self.password = QLineEdit(Form)
-        self.password.setObjectName(u"password")
-        self.password.setEchoMode(QLineEdit.EchoMode.PasswordEchoOnEdit)
+        self.login_window = QLineEdit(Form)
+        self.login_window.setObjectName(u"login_window")
+        self.login_window.setEchoMode(QLineEdit.EchoMode.PasswordEchoOnEdit)
 
-        self.horizontalLayout_2.addWidget(self.password)
+        self.horizontalLayout_2.addWidget(self.login_window)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
