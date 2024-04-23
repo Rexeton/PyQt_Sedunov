@@ -12,6 +12,7 @@ class Window(QtWidgets.QWidget):
         # if DEBUG:
         #     self.ui.login.setPlaceholderText('Vvedite_login')
         #     self.ui.password.setPlaceholderText('Vvedite_parol')
+        #     123
 
 
 if __name__ == "__main__":
