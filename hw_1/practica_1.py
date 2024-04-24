@@ -20,24 +20,28 @@ class Window(QtWidgets.QWidget):
         self.Book_shopWidget = Book_shop_form()
         self.ProfileCardWidget = Prof_card()
 
-        l_left = QtWidgets.QVBoxLayout()
-        l_left.addWidget(self.CalcWidget)
-        l_left.addWidget(self.ProfileCardWidget)
-        l_left.addWidget(self.ShipParametersWidget)
-        l_left.addSpacerItem(QtWidgets.QSpacerItem(
-            0, 10, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding
-        ))
-        l_right = QtWidgets.QVBoxLayout()
-        l_right.addWidget(self.EngineSettingsWidget)
-        l_right.addWidget(self.LoginWidget)
-        l_right.addSpacerItem(QtWidgets.QSpacerItem(
+        l_first = QtWidgets.QVBoxLayout()
+        l_first.addWidget(self.CalcWidget)
+        l_first.addWidget(self.ProfileCardWidget)
+        l_first.addWidget(self.ShipParametersWidget)
+        # l_first.addSpacerItem(QtWidgets.QSpacerItem(
+        #     0, 10, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding
+        # ))
+        l_second= QtWidgets.QVBoxLayout()
+
+        l_second.addWidget(self.LoginWidget)
+        l_second.addWidget(self.Book_shopWidget)
+        l_second.addSpacerItem(QtWidgets.QSpacerItem(
             0, 10, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding
         ))
 
-        l_main = QtWidgets.QHBoxLayout()
-        l_main.addLayout(l_left)
-        l_main.addLayout(l_right)
-        l_main.addWidget(self.Book_shopWidget)
+        l_top = QtWidgets.QHBoxLayout()
+        l_top.addLayout(l_first)
+        l_top.addLayout(l_second)
+
+        l_main = QtWidgets.QVBoxLayout()
+        l_main.addLayout(l_top)
+        l_main.addWidget(self.EngineSettingsWidget)
 
         self.setLayout(l_main)
 
