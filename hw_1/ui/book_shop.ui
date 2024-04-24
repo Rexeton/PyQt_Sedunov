@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>391</height>
+    <width>605</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,40 +18,60 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QGroupBox" name="groupBox">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 85, 0);
+font: 700 11pt &quot;Segoe UI&quot;;</string>
+       </property>
        <property name="title">
         <string>Выберите книгу</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <widget class="QListWidget" name="listWidget">
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>11</pointsize>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(170, 0, 0);
+alternate-background-color: rgb(0, 85, 0);</string>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
+          </property>
+          <property name="textElideMode">
+           <enum>Qt::TextElideMode::ElideLeft</enum>
+          </property>
           <item>
-           <widget class="QCheckBox" name="checkBox">
-            <property name="text">
-             <string>Война и мир</string>
-            </property>
-           </widget>
+           <property name="text">
+            <string>Война и Мир</string>
+           </property>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_2">
-            <property name="text">
-             <string>Тихий Дон</string>
-            </property>
-           </widget>
+           <property name="text">
+            <string>Тихий Дон</string>
+           </property>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_3">
-            <property name="text">
-             <string>Их восемь, нас вое</string>
-            </property>
-           </widget>
+           <property name="text">
+            <string>Мастер и Маргарита</string>
+           </property>
           </item>
-         </layout>
+         </widget>
         </item>
        </layout>
       </widget>
      </item>
      <item>
       <widget class="QGroupBox" name="groupBox_2">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 85, 0);
+font: 700 11pt &quot;Segoe UI&quot;;</string>
+       </property>
        <property name="title">
         <string>Выберите форму оплаты</string>
        </property>
@@ -67,6 +87,9 @@
           </item>
           <item>
            <widget class="QRadioButton" name="radioButton_5">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(170, 0, 0);</string>
+            </property>
             <property name="text">
              <string>Наличными</string>
             </property>

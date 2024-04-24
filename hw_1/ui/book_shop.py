@@ -15,47 +15,50 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QPushButton,
-    QRadioButton, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QGroupBox, QHBoxLayout,
+    QListWidget, QListWidgetItem, QPushButton, QRadioButton,
+    QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(690, 391)
+        Form.resize(605, 400)
         self.verticalLayout_2 = QVBoxLayout(Form)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.groupBox = QGroupBox(Form)
         self.groupBox.setObjectName(u"groupBox")
-        self.verticalLayout_4 = QVBoxLayout(self.groupBox)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_3 = QVBoxLayout()
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.checkBox = QCheckBox(self.groupBox)
-        self.checkBox.setObjectName(u"checkBox")
+        self.groupBox.setStyleSheet(u"color: rgb(0, 85, 0);\n"
+"font: 700 11pt \"Segoe UI\";")
+        self.horizontalLayout = QHBoxLayout(self.groupBox)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.listWidget = QListWidget(self.groupBox)
+        QListWidgetItem(self.listWidget)
+        QListWidgetItem(self.listWidget)
+        QListWidgetItem(self.listWidget)
+        self.listWidget.setObjectName(u"listWidget")
+        font = QFont()
+        font.setFamilies([u"Segoe UI"])
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setItalic(False)
+        self.listWidget.setFont(font)
+        self.listWidget.setStyleSheet(u"color: rgb(170, 0, 0);\n"
+"alternate-background-color: rgb(0, 85, 0);")
+        self.listWidget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+        self.listWidget.setTextElideMode(Qt.TextElideMode.ElideLeft)
 
-        self.verticalLayout_3.addWidget(self.checkBox)
-
-        self.checkBox_2 = QCheckBox(self.groupBox)
-        self.checkBox_2.setObjectName(u"checkBox_2")
-
-        self.verticalLayout_3.addWidget(self.checkBox_2)
-
-        self.checkBox_3 = QCheckBox(self.groupBox)
-        self.checkBox_3.setObjectName(u"checkBox_3")
-
-        self.verticalLayout_3.addWidget(self.checkBox_3)
-
-
-        self.verticalLayout_4.addLayout(self.verticalLayout_3)
+        self.horizontalLayout.addWidget(self.listWidget)
 
 
         self.verticalLayout.addWidget(self.groupBox)
 
         self.groupBox_2 = QGroupBox(Form)
         self.groupBox_2.setObjectName(u"groupBox_2")
+        self.groupBox_2.setStyleSheet(u"color: rgb(0, 85, 0);\n"
+"font: 700 11pt \"Segoe UI\";")
         self.verticalLayout_6 = QVBoxLayout(self.groupBox_2)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.verticalLayout_5 = QVBoxLayout()
@@ -67,6 +70,7 @@ class Ui_Form(object):
 
         self.radioButton_5 = QRadioButton(self.groupBox_2)
         self.radioButton_5.setObjectName(u"radioButton_5")
+        self.radioButton_5.setStyleSheet(u"color: rgb(170, 0, 0);")
 
         self.verticalLayout_5.addWidget(self.radioButton_5)
 
@@ -99,9 +103,17 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043a\u043d\u0438\u0433\u0443", None))
-        self.checkBox.setText(QCoreApplication.translate("Form", u"\u0412\u043e\u0439\u043d\u0430 \u0438 \u043c\u0438\u0440", None))
-        self.checkBox_2.setText(QCoreApplication.translate("Form", u"\u0422\u0438\u0445\u0438\u0439 \u0414\u043e\u043d", None))
-        self.checkBox_3.setText(QCoreApplication.translate("Form", u"\u0418\u0445 \u0432\u043e\u0441\u0435\u043c\u044c, \u043d\u0430\u0441 \u0432\u043e\u0435", None))
+
+        __sortingEnabled = self.listWidget.isSortingEnabled()
+        self.listWidget.setSortingEnabled(False)
+        ___qlistwidgetitem = self.listWidget.item(0)
+        ___qlistwidgetitem.setText(QCoreApplication.translate("Form", u"\u0412\u043e\u0439\u043d\u0430 \u0438 \u041c\u0438\u0440", None));
+        ___qlistwidgetitem1 = self.listWidget.item(1)
+        ___qlistwidgetitem1.setText(QCoreApplication.translate("Form", u"\u0422\u0438\u0445\u0438\u0439 \u0414\u043e\u043d", None));
+        ___qlistwidgetitem2 = self.listWidget.item(2)
+        ___qlistwidgetitem2.setText(QCoreApplication.translate("Form", u"\u041c\u0430\u0441\u0442\u0435\u0440 \u0438 \u041c\u0430\u0440\u0433\u0430\u0440\u0438\u0442\u0430", None));
+        self.listWidget.setSortingEnabled(__sortingEnabled)
+
         self.groupBox_2.setTitle(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u043e\u0440\u043c\u0443 \u043e\u043f\u043b\u0430\u0442\u044b", None))
         self.radioButton_4.setText(QCoreApplication.translate("Form", u"\u041f\u043e \u043a\u0430\u0440\u0442\u0435", None))
         self.radioButton_5.setText(QCoreApplication.translate("Form", u"\u041d\u0430\u043b\u0438\u0447\u043d\u044b\u043c\u0438", None))
