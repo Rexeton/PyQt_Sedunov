@@ -71,7 +71,7 @@ class Window(QtWidgets.QWidget):
         :return: None
         """
 
-        self.ui.plainTextEdit.setPlainText(self,'asd'
+        self.ui.plainTextEdit.setPlainText(self,'црфееруагсл'
                                            #  f'{datatime.datetime.now()}'
                                            # f' Кол-во мониторов {len(QtGui.QGuiApplication.screens())} '
                                            # f' Текущее основное окно {QtGui.QGuiApplication.primaryScreen()}'
