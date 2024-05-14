@@ -42,16 +42,31 @@ class Window(QtWidgets.QWidget):
         self.ui.spinBoxY.setMinimum(-1000)
         self.ui.spinBoxX.setValue(self.geometry().x())
         self.ui.spinBoxY.setValue(self.geometry().y())
+
+    def peremesh(self,wx,wy,nx,ny):
+        self.ui.plainTextEdit.setPlainText(f'{datatime.datetime.now()} \n'
+                                           f'Произошло перемещение окна\n'
+                                           f'С координат х:{wx}, у:{wy}\n'
+                                           f'В координаты х:{nx}, у:{ny}')
     def moveEvent(self, event: QtGui.QMoveEvent) -> None:
+        """
+        Событие движения окна
+
+        :param event: QtGui.QMoveEvent
+        :return: None
+        """
+        self.ui.spinBoxX.setValue(self.geometry().x())
+        self.ui.spinBoxY.setValue(self.geometry().y())
+
+    def resizeEvent(self, event: QtGui.QResizeEvent) -> None:
         """
         Событие изменения размера окна
 
         :param event: QtGui.QResizeEvent
         :return: None
         """
-        self.ui.spinBoxX.setValue(self.geometry().x())
-        self.ui.spinBoxY.setValue(self.geometry().y())
-
+        self.ui.plainTextEdit.setPlainText(f'{datatime.datetime.now()} \n'
+                                           f'Текущий размер ширина: {self.geometry().width()}, высота:{self.geometry().height()}')
 
     def initSignals(self) -> None:
         """
@@ -94,7 +109,7 @@ class Window(QtWidgets.QWidget):
                                            f' Минимальные размеры окна {self.minimumSize().height()} х {self.minimumSize().width()}\n'
                                            f' Текущее положение (координаты) окна x:{self.geometry().x()},y:{self.geometry().y()}\n'
                                            f' Координаты центра приложения x: {self.frameGeometry().center().x()} ,y: {self.frameGeometry().center().y()}\n'
-                                           f' Cостояние окна {QtGui.QGuiApplication.applicationState()}\n'
+                                           f' Cостояние окна {self.windowState().name}\n'
                                            )
 
 
@@ -104,52 +119,64 @@ class Window(QtWidgets.QWidget):
 
         :return: None
         """
+        wx=self.geometry().x()
+        wy = self.geometry().y()
         self.move(self.ui.spinBoxX.value(),self.ui.spinBoxY.value())
-
+        self.peremesh(wx,wy,self.geometry().x(),self.geometry().y())
     def onPushButtonCenterClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonLineEdit
 
         :return: None
         """
+        wx=self.geometry().x()
+        wy = self.geometry().y()
         qp = QtGui.QGuiApplication.screenAt(self.geometry().center()).geometry().center()
         self.move(qp.x()-self.size().width()/2,qp.y()-self.size().height()/2)
-
+        self.peremesh(wx, wy, self.geometry().x(), self.geometry().y())
     def onPushButtonLTClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonLineEdit
 
         :return: None
         """
+        wx=self.geometry().x()
+        wy = self.geometry().y()
         self.move(QtGui.QGuiApplication.screenAt(self.geometry().center()).geometry().topLeft())
-
+        self.peremesh( wx, wy, self.geometry().x(), self.geometry().y())
     def onButtonRTClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonLineEdit
 
         :return: None
         """
+        wx=self.geometry().x()
+        wy = self.geometry().y()
         qp=QtGui.QGuiApplication.screenAt(self.geometry().center()).geometry().topRight()
         self.move(qp.x()-self.size().width(),qp.y())
-
+        self.peremesh( wx, wy, self.geometry().x(), self.geometry().y())
     def onPushButtonRBClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonLineEdit
 
         :return: None
         """
+        wx=self.geometry().x()
+        wy = self.geometry().y()
         qp=QtGui.QGuiApplication.screenAt(self.geometry().center()).geometry().bottomRight()
         self.move(qp.x()-self.size().width(),qp.y()-self.size().height())
-
+        self.peremesh( wx, wy, self.geometry().x(), self.geometry().y())
     def onPushButtonLBClicked(self) -> None:
         """
         Обработка сигнала clicked для кнопки pushButtonLineEdit
 
         :return: None
         """
+        wx=self.geometry().x()
+        wy = self.geometry().y()
         qp=QtGui.QGuiApplication.screenAt(self.geometry().center()).geometry().bottomLeft()
         self.move(qp.x(),qp.y()-self.size().height())
-
+        self.peremesh( wx, wy, self.geometry().x(), self.geometry().y())
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
 
