@@ -64,7 +64,8 @@ class Ui_Form(object):
 
 
         self.retranslateUi(Form)
-
+        for el  in ['oct','hex','bin','dec']:
+            self.comboBox.addItem(el)
         QMetaObject.connectSlotsByName(Form)
     # setupUi
 
