@@ -75,7 +75,7 @@ class Ui_Form(object):
         self.groupBox_3.setObjectName(u"groupBox_3")
         self.verticalLayout_2 = QVBoxLayout(self.groupBox_3)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3 = QVBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.label = QLabel(self.groupBox_3)
         self.label.setObjectName(u"label")
