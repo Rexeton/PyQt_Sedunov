@@ -66,7 +66,6 @@ class Window(QtWidgets.QWidget):
         self.config_settings.setValue(
             "razryd",self.ui.comboBox.currentIndex())
     def eventFilter(self, watched: QtCore.QObject, event: QtCore.QEvent) -> bool:
-        self.tek_mode_ind=self.ui.comboBox.currentIndex()
         if watched==self.ui.dial and event.type()==QtCore.QEvent.Type.Paint:
             self.change_elem(self.ui.dial.value())
         elif watched==self.ui.horizontalSlider and event.type()==QtCore.QEvent.Type.Paint:
@@ -84,18 +83,19 @@ class Window(QtWidgets.QWidget):
             self.change_elem(new_value)
     def nastroika_lcd(self):
         self.tek_mode=self.ui.lcdNumber.mode()
-        if self.ui.comboBox.currentText()=='dec':
+        if self.ui.comboBox.currentText()=='Dec':
             self.ui.lcdNumber.setDecMode()
-        elif self.ui.comboBox.currentText()=='hex':
+        elif self.ui.comboBox.currentText()=='Hex':
             self.ui.lcdNumber.setHexMode()
-        elif self.ui.comboBox.currentText()=='bin':
+        elif self.ui.comboBox.currentText()=='Bin':
             self.ui.lcdNumber.setBinMode()
-        elif self.ui.comboBox.currentText()=='oct':
+        elif self.ui.comboBox.currentText()=='Oct':
             self.ui.lcdNumber.setOctMode()
         if self.ui.lcdNumber.checkOverflow(self.ui.lcdNumber.value()):
             self.msg.exec()
             self.ui.lcdNumber.setMode(self.tek_mode)
-            self.ui.comboBox.setCurrentIndex(self.tek_mode_ind)
+            self.ui.comboBox.setCurrentIndex(self.ui.spis[str(self.tek_mode).split('.')[1]])
+
     def change_elem(self,new_value):
         self.ui.dial.setValue(new_value)
         self.ui.lcdNumber.display(new_value)
