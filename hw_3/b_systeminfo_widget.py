@@ -20,8 +20,9 @@ class Sys_inf(QtWidgets.QWidget):
         super().__init__(parent)
         self.initUi()
         self.__initSignals()
-        self.getSystemInfo: SystemInfo
-
+        self.getSystemInfo=SystemInfo()
+        # self.plainTextEditCPU.setPlainText(self.getSystemInfo.systemInfoReceived.)
+        # self.plainTextEditCPU.setPlainText(self.getSystemInfo.systemInfoReceived)
     def initUi(self):
 
         self.spinBoxDelay = QtWidgets.QSpinBox()
@@ -44,13 +45,13 @@ class Sys_inf(QtWidgets.QWidget):
         self.spinBoxDelay.valueChanged.connect(self.__setDelay)
 
     def __setDelay(self):
-        self.= self.spinBoxDelay.value()
+        self.getSystemInfo.delay= self.spinBoxDelay.value()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
 
     window = Sys_inf()
-
+    window.getSystemInfo.connect(lambda date: print(date, type(date)))
     window.show()
 
     app.exec()
