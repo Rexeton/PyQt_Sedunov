@@ -9,7 +9,7 @@ from PySide6 import QtCore
 
 
 class SystemInfo(QtCore.QThread):
-    systemInfoReceived = QtCore.Signal(object)  # TODO Создайте экземпляр класса Signal и передайте ему в конструктор тип данных передаваемого значения (в текущем случае list)
+    systemInfoReceived = QtCore.Signal(list)  # TODO Создайте экземпляр класса Signal и передайте ему в конструктор тип данных передаваемого значения (в текущем случае list)
     def __init__(self, parent=None):
         super().__init__(parent)
         self.delay = None  # TODO создайте атрибут класса self.delay = None, для управлением задержкой получения данных
