@@ -65,6 +65,7 @@ class Window(QtWidgets.QWidget):
             "counter",self.ui.dial.value())
         self.config_settings.setValue(
             "razryd",self.ui.comboBox.currentIndex())
+
     def eventFilter(self, watched: QtCore.QObject, event: QtCore.QEvent) -> bool:
         if watched==self.ui.dial and event.type()==QtCore.QEvent.Type.Paint:
             self.change_elem(self.ui.dial.value())
