@@ -15,13 +15,16 @@
 from PySide6 import QtWidgets
 from a_threads import SystemInfo
 
+
 class Sys_inf(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.initUi()
         self.__initSignals()
-        self.getSystemInfo=SystemInfo()
-        # self.getSystemInfo.run()
+        self.getSystemInfo = SystemInfo()
+        self.__setDelay()
+        self.getSystemInfo.systemInfoReceived.connect(self.__updinf)
+        self.getSystemInfo.start()
 
     def initUi(self):
 
@@ -34,10 +37,12 @@ class Sys_inf(QtWidgets.QWidget):
         self.plainTextEditRAM = QtWidgets.QPlainTextEdit()
         self.plainTextEditRAM.setReadOnly(True)
 
+        l_cpu_ram = QtWidgets.QHBoxLayout()
+        l_cpu_ram.addWidget(self.plainTextEditCPU)
+        l_cpu_ram.addWidget(self.plainTextEditRAM)
         l = QtWidgets.QVBoxLayout()
         l.addWidget(self.spinBoxDelay)
-        l.addWidget(self.plainTextEditCPU)
-        l.addWidget(self.plainTextEditRAM)
+        l.addLayout(l_cpu_ram)
 
         self.setLayout(l)
 
@@ -47,14 +52,14 @@ class Sys_inf(QtWidgets.QWidget):
     def __setDelay(self):
         self.getSystemInfo.delay= self.spinBoxDelay.value()
 
-    def update_info(self):
-        self.plainTextEditCPU.setPlainText(str(self.getSystemInfo.systemInfoReceived()))
-        # self.plainTextEditRAM.setPlainText(str(self.getSystemInfo.systemInfoReceived[1]))
+    def __updinf(self):
+        self.getSystemInfo.systemInfoReceived.connect(lambda date: self.plainTextEditCPU.setPlainText(f'CPU {str(date[0])}'))
+        self.getSystemInfo.systemInfoReceived.connect(lambda date: self.plainTextEditRAM.setPlainText(f'RAM {str(date[1])}'))
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
 
     window = Sys_inf()
-    window.getSystemInfo.connect(print)
     window.show()
 
     app.exec()
