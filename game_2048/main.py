@@ -37,23 +37,19 @@ class dva_widgets(QtWidgets.QWidget):
                 self.count_new_V([0,0,0,0],1)
                 self.recount_V([0,1,2],1)
                 self.count_new_V([0, 0, 0, 0], 1)
-                self.paint_new()
             if event.key()==QtCore.Qt.Key_Down:
                 self.count_new_V([3,3,3,3],-1)
                 self.recount_V([3, 2, 1], -1)
                 self.count_new_V([3, 3, 3, 3], -1)
-                self.paint_new()
             if event.key()==QtCore.Qt.Key_Left:
                 self.count_new_H([0,0,0,0],1)
                 self.recount_H([0,1,2],1)
                 self.count_new_H([0, 0, 0, 0], 1)
-                self.paint_new()
             if event.key()==QtCore.Qt.Key_Right:
                 self.count_new_H([3,3,3,3],-1)
                 self.recount_H([3, 2, 1], -1)
                 self.count_new_H([3, 3, 3, 3], -1)
-                self.paint_new()
-
+            self.paint_new()
 
             i, j = self.__new_elem()
             self.list_lable[i][j].setText(str(2))
