@@ -57,7 +57,7 @@ class Ui_Game_2048(object):
 
         self.groupBox_3 = QGroupBox(self.groupBox_2)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setMinimumSize(QSize(130, 0))
+        self.groupBox_3.setMinimumSize(QSize(130, 100))
         font = QFont()
         font.setPointSize(9)
         self.groupBox_3.setFont(font)
@@ -83,9 +83,16 @@ class Ui_Game_2048(object):
 
         self.horizontalLayout_2.addWidget(self.groupBox_3)
 
-        self.horizontalSpacer = QSpacerItem(374, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.horizontalSpacer = QSpacerItem(293, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
+
+        self.pushButton = QPushButton(self.groupBox_2)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setMinimumSize(QSize(0, 100))
+        self.pushButton.setStyleSheet(u"background-color: rgb(255, 255, 190);")
+
+        self.horizontalLayout_2.addWidget(self.pushButton)
 
         self.start_pushButton = QPushButton(self.groupBox_2)
         self.start_pushButton.setObjectName(u"start_pushButton")
@@ -269,6 +276,7 @@ class Ui_Game_2048(object):
         self.groupBox_3.setTitle("")
         self.label_2.setText(QCoreApplication.translate("Game_2048", u"\u0420\u0435\u043a\u043e\u0440\u0434", None))
         self.label_4.setText(QCoreApplication.translate("Game_2048", u"0", None))
+        self.pushButton.setText(QCoreApplication.translate("Game_2048", u"\u041f\u043e\u0431\u0435\u0434\u0438\u0442\u0435\u043b\u0438", None))
         self.start_pushButton.setText(QCoreApplication.translate("Game_2048", u"\u041d\u0430\u0447\u0430\u0442\u044c \u0438\u0433\u0440\u0443", None))
         self.groupBox.setTitle("")
         self.label_00.setText("")

@@ -81,7 +81,7 @@
         <property name="minimumSize">
          <size>
           <width>130</width>
-          <height>0</height>
+          <height>100</height>
          </size>
         </property>
         <property name="font">
@@ -138,11 +138,27 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>374</width>
+          <width>293</width>
           <height>20</height>
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 190);</string>
+        </property>
+        <property name="text">
+         <string>Победители</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="start_pushButton">

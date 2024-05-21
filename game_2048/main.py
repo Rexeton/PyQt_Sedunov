@@ -2,7 +2,9 @@ from PySide6 import QtWidgets
 from PySide6 import QtGui
 from PySide6 import QtCore
 from ui.game_2048 import Ui_Game_2048
+from ui.table_win import Ui_Form as table_win
 import random as rand
+import json
 class dva_widgets(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -25,8 +27,21 @@ class dva_widgets(QtWidgets.QWidget):
         self.ui.setupUi(self)
         self.list_lable=[[self.ui.label_00,self.ui.label_01,self.ui.label_02,self.ui.label_03],[self.ui.label_10,self.ui.label_11,self.ui.label_12,self.ui.label_13],[self.ui.label_20,self.ui.label_21,self.ui.label_22,self.ui.label_23],[self.ui.label_30,self.ui.label_31,self.ui.label_32,self.ui.label_33]]
         self.status=False
+        self.config_settings = QtCore.QSettings("Game_2048")
+        self.winners = json.loads(self.config_settings.value("winners", str('{}')))
         self._initsign()
 
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+        """
+        Событие закрытия окна
+
+        :param event: QtGui.QCloseEvent
+        :return: None
+        """
+
+        # Сохранение списка IP-адресов в настройки
+        self.config_settings.setValue(
+            "winners", str(self.winners))
 
     def __new_elem(self):
         el = rand.choice([el for el in self.none_ind if el not in self.full_ind])
@@ -52,7 +67,7 @@ class dva_widgets(QtWidgets.QWidget):
             self.paint_new()
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
-        self.game_over()
+
         if self.status:
             if event.key()==QtCore.Qt.Key_Up:
                 self.need_up()
@@ -64,6 +79,7 @@ class dva_widgets(QtWidgets.QWidget):
                 self.need_right()
             self.repaint_kv()
             self.you_win()
+            self.game_over()
 
     def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
         self.x_pos_was=event.globalPosition().x()
@@ -72,7 +88,7 @@ class dva_widgets(QtWidgets.QWidget):
     def mouseReleaseEvent(self, event: QtGui.QMouseEvent) -> None:
         self.x_pos_now=event.globalPosition().x()
         self.y_pos_now =event.globalPosition().y()
-        self.game_over()
+
         if self.status and (self.x_pos_was!=self.x_pos_now or self.y_pos_was!=self.y_pos_now):
             if abs(self.x_pos_was-self.x_pos_now)>abs(self.y_pos_was-self.y_pos_now):
                 if self.x_pos_was-self.x_pos_now>0:
@@ -86,6 +102,11 @@ class dva_widgets(QtWidgets.QWidget):
                     self.need_down()
             self.repaint_kv()
             self.you_win()
+            self.game_over()
+
+    def watch_winners(self):
+        self.tablo=win_tablo()
+        self.tablo.show()
 
     def need_up(self):
         self.count_new_V([0, 0, 0, 0], 1)
@@ -113,7 +134,9 @@ class dva_widgets(QtWidgets.QWidget):
             self.list_lable[i][j].setText(str(2**(pow_+1)))
             self.int_list[i][j]=2**(pow_+1)
             self.paint_new()
+        self.ui.label_3.setText(str(0))
         self.ui.groupBox.setFocus()
+
     def count_new_H(self,obl_ind,ind):
         new_ris={}
         self.full_ind=sorted(self.full_ind)[::ind]
@@ -156,6 +179,7 @@ class dva_widgets(QtWidgets.QWidget):
                     self.int_list[i][j]=self.int_list[i][j]*2
                     self.int_list[i][j+ind]=0
                     del self.full_ind[str(i)+str(j+ind)]
+                    self.ui.label_3.setText(str(int(self.ui.label_3.text()) + self.int_list[i][j]))
 
     def recount_V(self,obl_ind, ind):
         for j in range(0,4):
@@ -164,10 +188,11 @@ class dva_widgets(QtWidgets.QWidget):
                     self.int_list[i][j]=self.int_list[i][j]*2
                     self.int_list[i+ind][j]=0
                     del self.full_ind[str(i+ind)+str(j)]
+                    self.ui.label_3.setText(str(int(self.ui.label_3.text())+self.int_list[i][j]))
 
     def _initsign(self):
         self.ui.start_pushButton.clicked.connect(self.start_restart_game)
-        pass
+        self.ui.pushButton.clicked.connect(self.watch_winners)
 
     def proverka_ne_prosla(self):
             for i in range(0,4):
@@ -179,6 +204,12 @@ class dva_widgets(QtWidgets.QWidget):
                     if self.int_list[i][j]==self.int_list[i-1][j]:
                         return False
             return True
+
+class win_tablo(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.ui=table_win()
+        self.ui.setupUi(self)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
