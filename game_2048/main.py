@@ -23,12 +23,15 @@ class dva_widgets(QtWidgets.QWidget):
                              '2048':'font: 700 20pt "Segoe UI";\nbackground-color: rgb(0, 0, 110);'}
         self.full_ind = {}
         self.int_list=None
+        self.winners={}
         self.ui=Ui_Game_2048()
         self.ui.setupUi(self)
         self.list_lable=[[self.ui.label_00,self.ui.label_01,self.ui.label_02,self.ui.label_03],[self.ui.label_10,self.ui.label_11,self.ui.label_12,self.ui.label_13],[self.ui.label_20,self.ui.label_21,self.ui.label_22,self.ui.label_23],[self.ui.label_30,self.ui.label_31,self.ui.label_32,self.ui.label_33]]
         self.status=False
         self.config_settings = QtCore.QSettings("Game_2048")
         self.winners = json.loads(self.config_settings.value("winners", str('{}')))
+        if len(self.winners)!=0:
+            self.ui.label_2.setText(str(max(self.winners)))
         self._initsign()
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
@@ -52,7 +55,12 @@ class dva_widgets(QtWidgets.QWidget):
         if max(self.int_list) == 2048:
             QtWidgets.QMessageBox.warning(self, "Ахренеть", "Ты победил")
             self.status = False
-            return
+            if int(self.ui.label_3.text())>min(self.winners):
+                self.inboxname=input_name()
+                self.inboxname.pushButtonRec.clicked.connect(self.winners[])
+                self.inboxname.show()
+                self.watch_winners()
+
     def game_over(self):
         if len(self.full_ind) == len(self.none_ind):
             if self.proverka_ne_prosla():
@@ -106,6 +114,13 @@ class dva_widgets(QtWidgets.QWidget):
 
     def watch_winners(self):
         self.tablo=win_tablo()
+        if len(self.winners)!=0:
+            list_winners=sorted(self.winners)
+            i=0
+            for el in list_winners:
+                self.tablo.ui.tableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(str(el.key)))
+                self.tablo.ui.tableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(str(el.item)))
+                i+=1
         self.tablo.show()
 
     def need_up(self):
@@ -210,6 +225,19 @@ class win_tablo(QtWidgets.QWidget):
         super().__init__(parent)
         self.ui=table_win()
         self.ui.setupUi(self)
+
+class input_name(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.lineEditName = QtWidgets.QLineEdit()
+        self.lineEditName.setPlaceholderText('Введите имя')
+
+        self.pushButtonRec = QtWidgets.QPushButton("Добавить рекорд")
+        self.pushButtonRec.setCheckable(True)
+        l_main = QtWidgets.QVBoxLayout()
+        l_main.addWidget(self.lineEditName)
+        l_main.addWidget(self.pushButtonRec)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
