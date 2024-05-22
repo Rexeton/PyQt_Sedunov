@@ -1,10 +1,12 @@
+import math
+
 from PySide6 import QtWidgets
 from PySide6 import QtGui
 from PySide6 import QtCore
 from ui.game_2048 import Ui_Game_2048
 from ui.table_win import Ui_Form as table_win
 import random as rand
-import json
+from datetime import datetime
 class dva_widgets(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -23,16 +25,30 @@ class dva_widgets(QtWidgets.QWidget):
                              '2048':'font: 700 20pt "Segoe UI";\nbackground-color: rgb(0, 0, 110);'}
         self.full_ind = {}
         self.int_list=None
-        self.winners={}
+        self.inboxname=None
         self.ui=Ui_Game_2048()
         self.ui.setupUi(self)
         self.list_lable=[[self.ui.label_00,self.ui.label_01,self.ui.label_02,self.ui.label_03],[self.ui.label_10,self.ui.label_11,self.ui.label_12,self.ui.label_13],[self.ui.label_20,self.ui.label_21,self.ui.label_22,self.ui.label_23],[self.ui.label_30,self.ui.label_31,self.ui.label_32,self.ui.label_33]]
         self.status=False
         self.config_settings = QtCore.QSettings("Game_2048")
-        self.winners = json.loads(self.config_settings.value("winners", str('{}')))
-        if len(self.winners)!=0:
-            self.ui.label_2.setText(str(max(self.winners)))
+        self.winners=self.config_settings.value("winners",{"table":[]})
+        self.last_winners =self.config_settings.value("last_winners", 'New_gamer')
+        self.getMinMaxScore()
+
         self._initsign()
+
+    def getMinMaxScore(self):
+        self.max_score=0
+        self.min_score = 0
+        if len(self.winners['table'])>0:
+            self.min_score = math.inf
+            for el in self.winners['table']:
+                self.min_score=min(self.min_score,int(el['score']))
+                self.max_score=max(self.max_score,int(el['score']))
+        if self.min_score==self.max_score:
+            self.min_score = 0
+        self.ui.label_4.setText(str(self.max_score))
+
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         """
@@ -42,31 +58,45 @@ class dva_widgets(QtWidgets.QWidget):
         :return: None
         """
 
-        # Сохранение списка IP-адресов в настройки
         self.config_settings.setValue(
-            "winners", str(self.winners))
-
+            "winners", self.winners)
+        self.config_settings.setValue(
+            "last_winners", self.last_winners)
     def __new_elem(self):
         el = rand.choice([el for el in self.none_ind if el not in self.full_ind])
         self.full_ind[el]=1
         return int(el[0]),int(el[1])
+    def zapic_v_record(self):
+        dday=datetime.today()
+        self.winners['table'].append({'date':f'{dday.year}-{dday.month:02}-{dday.day}','name':self.inboxname.lineEditName.text(),'score':self.ui.label_3.text()})
+        self.last_winners=self.inboxname.lineEditName.text()
+        self.getMinMaxScore()
+
+    def end_naming(self):
+        if self.inboxname is not None:
+            self.inboxname.close()
+    def is_new_record(self):
+        score=int(self.ui.label_3.text())
+        self.getMinMaxScore()
+        if score > self.min_score and score!=0:
+            self.inboxname = input_name()
+            self.inboxname.lineEditName.setText(str(self.last_winners))
+            self.inboxname.pushButtonRec.clicked.connect(self.zapic_v_record)
+            self.inboxname.pushButtonRec.clicked.connect(self.end_naming)
+            self.inboxname.show()
 
     def you_win(self):
         if max(self.int_list) == 2048:
             QtWidgets.QMessageBox.warning(self, "Ахренеть", "Ты победил")
             self.status = False
-            if int(self.ui.label_3.text())>min(self.winners):
-                self.inboxname=input_name()
-                self.inboxname.pushButtonRec.clicked.connect(self.winners[])
-                self.inboxname.show()
-                self.watch_winners()
+            self.is_new_record()
 
     def game_over(self):
         if len(self.full_ind) == len(self.none_ind):
             if self.proverka_ne_prosla():
                 QtWidgets.QMessageBox.warning(self, "game_over", "Больше я тебе ходить не дам")
                 self.status = False
-
+                self.is_new_record()
     def repaint_kv(self):
         if len(self.full_ind) != len(self.none_ind):
             i, j = self.__new_elem()
@@ -112,15 +142,22 @@ class dva_widgets(QtWidgets.QWidget):
             self.you_win()
             self.game_over()
 
+
     def watch_winners(self):
         self.tablo=win_tablo()
-        if len(self.winners)!=0:
-            list_winners=sorted(self.winners)
+        if len(self.winners['table'])!=0:
+            list_winners=self.winners['table']
+            new_list = []
             i=0
-            for el in list_winners:
-                self.tablo.ui.tableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(str(el.key)))
-                self.tablo.ui.tableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(str(el.item)))
+            for el in sorted(sorted(list_winners,key=lambda x: int(str(x['date']).replace('-',''))),key=lambda x: -int(x['score'])):
+                self.tablo.ui.tableWidget.setItem(i, 0, QtWidgets.QTableWidgetItem(str(el['date'])))
+                self.tablo.ui.tableWidget.setItem(i, 1, QtWidgets.QTableWidgetItem(str(el['name'])))
+                self.tablo.ui.tableWidget.setItem(i, 2, QtWidgets.QTableWidgetItem(str(el['score'])))
+                new_list.append(el)
                 i+=1
+                if i == 5:
+                    break
+            self.winners['table'] = new_list
         self.tablo.show()
 
     def need_up(self):
@@ -150,6 +187,7 @@ class dva_widgets(QtWidgets.QWidget):
             self.int_list[i][j]=2**(pow_+1)
             self.paint_new()
         self.ui.label_3.setText(str(0))
+        self.getMinMaxScore()
         self.ui.groupBox.setFocus()
 
     def count_new_H(self,obl_ind,ind):
@@ -229,15 +267,15 @@ class win_tablo(QtWidgets.QWidget):
 class input_name(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setObjectName('Введите свое имя')
         self.lineEditName = QtWidgets.QLineEdit()
-        self.lineEditName.setPlaceholderText('Введите имя')
-
+        self.lineEditName.setPlaceholderText('Введите имя, пожалуйста')
         self.pushButtonRec = QtWidgets.QPushButton("Добавить рекорд")
         self.pushButtonRec.setCheckable(True)
         l_main = QtWidgets.QVBoxLayout()
         l_main.addWidget(self.lineEditName)
         l_main.addWidget(self.pushButtonRec)
-
+        self.setLayout(l_main)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication()
