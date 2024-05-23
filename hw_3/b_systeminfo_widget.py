@@ -22,6 +22,8 @@ class Sys_inf(QtWidgets.QWidget):
         self.initUi()
         self.__initSignals()
         self.getSystemInfo = SystemInfo()
+        self.plainTextEditCPU.setPlainText(f'CPU {self.getSystemInfo.cpu_value}')
+        self.plainTextEditRAM.setPlainText(f'RAM {self.getSystemInfo.ram_value}')
         self.__setDelay()
         self.getSystemInfo.systemInfoReceived.connect(self.__updinf)
         self.getSystemInfo.start()

@@ -13,6 +13,12 @@ class SystemInfo(QtCore.QThread):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.delay = None  # TODO создайте атрибут класса self.delay = None, для управлением задержкой получения данных
+        self.cpu_value = str(
+            psutil.cpu_percent())  # TODO с помощью вызова функции cpu_percent() в пакете psutil получите загрузку CPU
+        self.ram_value = str(
+            psutil.virtual_memory().percent)  # TODO с помощью вызова функции virtual_memory().percent в пакете psutil получите загрузку RAM
+        self.systemInfoReceived.emit(
+            [self.cpu_value, self.ram_value])  # TODO с помощью метода .emit передайте в виде списка данные о загрузке CPU и RAM
 
     def run(self) -> None:  # TODO переопределить метод run
         if self.delay is None:  # TODO Если задержка не передана в поток перед его запуском
